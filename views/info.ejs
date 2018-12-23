@@ -1,0 +1,74 @@
+<% include partials/header %>
+
+<div class="container">
+<div class = "container mt-1 pt-4 align-center justify-content-between">
+    <div class = "row align-center justify-content-between">
+        <div class = "col col-12 col-md-6 order-2 order-md-1">
+            <button class="btn btn-info mb-3" onclick="goBack()">Go Back</button>
+            <h3><%= name %></h3>
+            <p><%= sciname %></p> 
+            <p><%= paragraph %></p>
+        </div>
+        
+        <% for(var i = 0; i<photos.length; i++){ 
+                    %><p class="imglinks d-none"><%= photos[i] %></p>
+               <%
+            } %>
+        <div class = "col col-12 col-md-6 order-1 order-md-2">
+                <img class="creaturePhoto card-img" src="<%= photos[0] %>" >
+                <div class="d-flex justify-content-around mt-2">
+                    <button id="backButton" class="btn backforwardbutt inactiveButton"><i class="fas fa-angle-double-left"></i></button>
+                    <button id="forButton" class="btn backforwardbutt <%if(photos.length===1){%> inactiveButton <%};%>"><i class="fas fa-angle-double-right"></i></button>
+                </div>
+        </div>
+    </div>
+</div>
+
+<% include partials/footer %>
+<script>
+var images={
+    current:0,
+    num: null,
+    links: []
+}
+var paras = document.querySelectorAll(".imglinks");
+for(var i = 0; i<paras.length; i++){
+    var newURL= paras[i].innerText;
+    images["links"].push(newURL);
+}
+images["num"]= images["links"].length;
+
+$("#backButton").on("click",function(){
+    if(images.current > 0){
+        var prev = images.current - 1;
+        $(".creaturePhoto").attr("src", images["links"][prev]);
+        images.current --;
+        $("#forButton").removeClass("inactiveButton");
+        if(images.current===0){
+            $("#backButton").addClass("inactiveButton");
+        }
+    } else{
+        console.log("beginning of links");}
+});
+
+$("#forButton").on("click",function(){
+    if(images.current<images.num-1){
+        var next = images.current + 1; 
+        console.log("clicked!");
+        console.log(images["links"]);
+        $(".creaturePhoto").attr("src", images["links"][next]);
+        images.current ++;
+        $("#backButton").removeClass("inactiveButton")
+        if(images.current==images.num-1){
+            $("#forButton").addClass("inactiveButton")
+        }
+    } else{
+        console.log("end of links");
+    }
+})
+
+function goBack() {
+    window.history.back();
+}
+
+</script>

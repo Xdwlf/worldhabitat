@@ -1,0 +1,15 @@
+<% include partials/header %>
+
+<div class="container mt-5 pt-5">
+    <button class="btn btn-info mb-3" onclick="goBack()">Go Back</button>
+    <h3>Error. Please return to the previous page. </h3>
+    <p> <%= error %> </p>
+    
+</div>
+
+<script>
+    function goBack() {
+    window.history.back();
+    }
+</script>
+<% include partials/footer %>

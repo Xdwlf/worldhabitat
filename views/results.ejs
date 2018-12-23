@@ -1,0 +1,197 @@
+<% include partials/header %>
+
+<div class="container-fluid p-0">
+    <div class="jumbotron jumbotron-fluid px-0 text-center">
+        <div class= "row justify-content-between align-items-center">
+            <div class = "col-7">
+                <h1>Spotted in the Ecosystem</h1>
+                <form class="mt-3 form-inline justify-content-center" action="/results" method="get">
+                <input class="mr-3 form-control" type="text" name="search" placeholder="Enter A Location">
+                <button class ="btn btn-info" type="submit">Search Again</button>
+                </form>
+            </div>
+            <div class = "col-5">
+                <div class="ml-auto"><img id="mapsquare" src="<%=map%>"></div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <div class= "container-fluid">
+        <h3>Mammals</h3>
+        <div class="row">
+            <% 
+            var counter = 0;
+            creatures["mammals"].forEach(function(creature){
+                if(counter < 12){
+                    counter ++;
+                %>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                        <form method="GET" action="/info" href>
+                            <input class="namecontain" type = "text" value="<%= creature["photo-url"]%>" name= "photoUrl">
+                            <input class="namecontain" type = "text" value="<%= creature["name"]%>" name= "name">
+                            <input class="namecontain" type = "text" value="<%= creature["scientific-name"]%>" name= "sciname">
+                            <button type="submit" class="card-button mb-3">
+                                <div class="card" style="max-width: 13rem;">
+                                  <img class="card-img-top" src="<%= creature["photo-url"][0]%>" alt="Card image cap" style="max-height:200px">
+                                  <div class="card-body p-1">
+                                    <div class="card-maintext">
+                                        <h5 class="card-title m-1" style="font-size:0.8rem"><%= creature["name"] %></h5>
+                                        <p class="card-text m-1" style="font-size:0.7rem"><%= creature["scientific-name"] %></p>
+                                    </div>
+                                  </div>
+                                </div>
+                            </button>
+                        </form>
+                    </div>
+                <% }}); %>
+        </div>
+        <h3>Birds</h3>
+        <div class="row">
+            <% 
+            counter = 0;
+            creatures["birds"].forEach(function(creature){
+                if(counter < 6){
+                    counter ++;
+                %>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                        <form method="GET" action="/info" href>
+                            <input class="namecontain" type = "text" value="<%= creature["photo-url"]%>" name= "photoUrl">
+                            <input class="namecontain" type = "text" value="<%= creature["name"]%>" name= "name">
+                            <input class="namecontain" type = "text" value="<%= creature["scientific-name"]%>" name= "sciname">
+                            <button type="submit" class="card-button mb-3">
+                                <div class="card" style="max-width: 13rem;">
+                                  <img class="card-img-top" src="<%= creature["photo-url"][0]%>" alt="Card image cap" style="max-height:200px">
+                                  <div class="card-body p-1">
+                                    <div class="card-maintext">
+                                        <h5 class="card-title m-1" style="font-size:0.8rem"><%= creature["name"] %></h5>
+                                        <p class="card-text m-1" style="font-size:0.7rem"><%= creature["scientific-name"] %></p>
+                                    </div>
+                                  </div>
+                                </div>
+                            </button>
+                        </form>
+                    </div>
+                <% }}); %>
+        </div>
+        <h3>Reptiles</h3>
+        <div class="row">
+            <% 
+            counter = 0;
+            creatures["reptiles"].forEach(function(creature){
+                if(counter < 6){
+                    counter ++;
+                %>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                        <form method="GET" action="/info" href>
+                            <input class="namecontain" type = "text" value="<%= creature["photo-url"]%>" name= "photoUrl">
+                            <input class="namecontain" type = "text" value="<%= creature["name"]%>" name= "name">
+                            <input class="namecontain" type = "text" value="<%= creature["scientific-name"]%>" name= "sciname">
+                            <button type="submit" class="card-button mb-3">
+                                <div class="card" style="max-width: 13rem;">
+                                  <img class="card-img-top" src="<%= creature["photo-url"][0]%>" alt="Card image cap" style="max-height:200px">
+                                  <div class="card-body p-1">
+                                    <div class="card-maintext">
+                                        <h5 class="card-title m-1" style="font-size:0.8rem"><%= creature["name"] %></h5>
+                                        <p class="card-text m-1" style="font-size:0.7rem"><%= creature["scientific-name"] %></p>
+                                    </div>
+                                  </div>
+                                </div>
+                            </button>
+                        </form>
+                    </div>
+                <% }}); %>
+        </div>
+        
+        <h3>Fish and Amphibians</h3>
+        <div class="row">
+            <% 
+            counter = 0;
+            creatures["fishes"].forEach(function(creature){
+                if(counter < 6){
+                    counter ++;
+                %>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                        <form method="GET" action="/info" href>
+                            <input class="namecontain" type = "text" value="<%= creature["photo-url"]%>" name= "photoUrl">
+                            <input class="namecontain" type = "text" value="<%= creature["name"]%>" name= "name">
+                            <input class="namecontain" type = "text" value="<%= creature["scientific-name"]%>" name= "sciname">
+                            <button type="submit" class="card-button mb-3">
+                                <div class="card" style="max-width: 13rem;">
+                                  <img class="card-img-top" src="<%= creature["photo-url"][0]%>" alt="Card image cap" style="max-height:200px">
+                                  <div class="card-body p-1">
+                                    <div class="card-maintext">
+                                        <h5 class="card-title m-1" style="font-size:0.8rem"><%= creature["name"] %></h5>
+                                        <p class="card-text m-1" style="font-size:0.7rem"><%= creature["scientific-name"] %></p>
+                                    </div>
+                                  </div>
+                                </div>
+                            </button>
+                        </form>
+                    </div>
+                <% }}); %>
+        </div>
+        <h3>Plants and Fungi</h3>
+        <div class="row">
+            <% 
+            counter = 0;
+            creatures["plants"].forEach(function(creature){
+                if(counter < 6){
+                    counter ++;
+                %>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                        <form method="GET" action="/info" href>
+                            <input class="namecontain" type = "text" value="<%= creature["photo-url"]%>" name= "photoUrl">
+                            <input class="namecontain" type = "text" value="<%= creature["name"]%>" name= "name">
+                            <input class="namecontain" type = "text" value="<%= creature["scientific-name"]%>" name= "sciname">
+                            <button type="submit" class="card-button mb-3">
+                                <div class="card" style="max-width: 13rem;">
+                                  <img class="card-img-top" src="<%= creature["photo-url"][0]%>" alt="Card image cap" style="max-height:200px">
+                                  <div class="card-body p-1">
+                                    <div class="card-maintext">
+                                        <h5 class="card-title m-1" style="font-size:0.8rem"><%= creature["name"] %></h5>
+                                        <p class="card-text m-1" style="font-size:0.7rem"><%= creature["scientific-name"] %></p>
+                                    </div>
+                                  </div>
+                                </div>
+                            </button>
+                        </form>
+                    </div>
+                <% }}); %>
+        </div>
+        <h3>Insects and Arachnids</h3>
+        <div class="row">
+            <% 
+            counter = 0;
+            creatures["bugs"].forEach(function(creature){
+                if(counter < 6){
+                    counter ++;
+                %>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                        <form method="GET" action="/info" href>
+                            <input class="namecontain" type = "text" value="<%= creature["photo-url"]%>" name= "photoUrl">
+                            <input class="namecontain" type = "text" value="<%= creature["name"]%>" name= "name">
+                            <input class="namecontain" type = "text" value="<%= creature["scientific-name"]%>" name= "sciname">
+                            <button type="submit" class="card-button mb-3">
+                                <div class="card" style="max-width: 13rem;">
+                                  <img class="card-img-top" src="<%= creature["photo-url"][0]%>" alt="Card image cap" style="max-height:200px">
+                                  <div class="card-body p-1">
+                                    <div class="card-maintext">
+                                        <h5 class="card-title m-1" style="font-size:0.8rem"><%= creature["name"] %></h5>
+                                        <p class="card-text m-1" style="font-size:0.7rem"><%= creature["scientific-name"] %></p>
+                                    </div>
+                                  </div>
+                                </div>
+                            </button>
+                        </form>
+                    </div>
+                <% }}); %>
+        </div>
+        
+        
+    </div>
+    
+
+
+
+<% include partials/footer %>

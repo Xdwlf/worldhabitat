@@ -1,0 +1,21 @@
+{
+  "name": "habitat",
+  "version": "1.0.0",
+  "description": "Educational website for learning about ecosystems by geolocation",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rowan Lin",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.1",
+    "asyncawait": "^1.0.7",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0"
+  }
+}
