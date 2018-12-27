@@ -1,7 +1,7 @@
 var express = require("express");
 var app = express();
 var request = require("request");
-var config= require("config.js");
+
 
 var creatures= {};
 
@@ -23,7 +23,7 @@ app.get("/results",function(req,res){
             var lat = latLng["lat"];
             var lng = latLng["lng"];
             var boxCoordinates= (lat-2)+ "&swlng=" + (lng-2.5)+ "&nelat=" + (lat+2) + "&nelng=" + (lng+2.5);
-            var mapUrl= "https://www.mapquestapi.com/staticmap/v5/map?key=" + config.config.mapquestKey + "&center=" + lat + "," + lng + "&zoom=5&scalebar=true&type=hyb&size=170,170@2x"
+            var mapUrl= "https://www.mapquestapi.com/staticmap/v5/map?key=" + process.env.MAPQUESTKEY + "&center=" + lat + "," + lng + "&zoom=5&scalebar=true&type=hyb&size=170,170@2x"
             var animalUrl = "https://www.inaturalist.org/observations.json?per_page=15&iconic_taxa[]=Mammalia&has[]=photos&has[]=geo&swlat=" + boxCoordinates;
             var birdUrl= "https://www.inaturalist.org/observations.json?per_page=8&iconic_taxa[]=Aves&has[]=photos&has[]=geo&swlat=" + boxCoordinates;
             var reptileUrl= "https://www.inaturalist.org/observations.json?per_page=8&iconic_taxa[]=Reptilia&has[]=photos&has[]=geo&swlat=" + boxCoordinates;
