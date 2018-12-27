@@ -1,7 +1,7 @@
 var express = require("express");
 var app = express();
 var request = require("request");
-var config= require(".node_modules/config.js");
+var config= require("./node_modules/config");
 
 var creatures= {};
 
