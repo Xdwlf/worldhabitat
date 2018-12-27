@@ -93,7 +93,7 @@ app.get("/info",function(req,res){
     var name = req.query.name;
     var sciname = req.query.sciname;
     var photos = parsePhotoString(req.query.photoUrl);
-    var url = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext=1&exintro=1&titles="+ name.toLowerCase(); 
+    var url = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext=1&exintro=1&titles="+ name.toLowerCase();
      request(url,function(error, response, body) {
                 if(!error && response.statusCode === 200){
                     var data = JSON.parse(body);
@@ -112,9 +112,9 @@ app.get("/info",function(req,res){
                     console.log("Wikipedia Request Error" + error);
                     res.render("error",{error:error});
                 }
-                
+
             });
-    
+
 })
 
 app.get("/about",function(req,res){
@@ -122,7 +122,7 @@ app.get("/about",function(req,res){
 })
 
 
-app.listen(process.env.PORT,process.env.IP,function(){
+app.listen(process.env.PORT || 3000,function(){
     console.log("Server has started")
 });
 
@@ -163,7 +163,7 @@ function checkDuplicate(creatureId){
 
 //checks if an iNaturalist entry has all the properties required to appear on site
 function checkValid(creature){
-    
+
         if(creature["taxon"]["common_name"] == null) return false;
         if(creature["taxon"]["name"]== null) return false;
         if(creature["photos"][0]["medium_url"]==null) return false;
@@ -174,10 +174,10 @@ function checkValid(creature){
         avoidTerms.forEach(function(term){
             if(checkString(term,creatureName)===true){
                 valid= false;
-            } 
+            }
         });
     //check if all entries exist
-        
+
     return valid;
     };
     creatures[creatureName] = dataArray;
