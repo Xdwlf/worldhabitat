@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "lockfileVersion": 1,
   "requires": true,
+  "pkg": {
+    "assets": [
+      "node_modules/config/**/*.*"
+    ]
+  },
   "scripts": {
     "start": "node app.js"
   },
