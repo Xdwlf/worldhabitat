@@ -69,7 +69,7 @@ const tools = {
       let index = photoStr.indexOf(",");
       if (index === -1) return [photoStr];
       let currentUrl = [photoStr.slice(0,index)];
-      return currentUrl.concat(formatPhotoString(photoStr.slice(index+1)));
+      return currentUrl.concat(tools.formatPhotoString(photoStr.slice(index+1)));
   }
 }
 
