@@ -1,7 +1,9 @@
+
 var express = require("express");
 var app = express();
 var request = require("request");
 var rp = require('request-promise')
+var tools = require('./tools')
 
 app.set("view engine","ejs");
 
@@ -53,7 +55,7 @@ app.get("/results",function(req,res){
           },
           json:true
         }).then(data=> {
-          return addCreatures(data, species.name)
+          return tools.addCreatures(data, species.name)
         })
       })
       Promise.all(requestCreatures).then((data)=>{
@@ -69,7 +71,7 @@ app.get("/results",function(req,res){
 app.get("/info",function(req,res){
     let name = req.query.name;
     let sciname = req.query.sciname;
-    let photos = parsePhotoString(req.query.photoUrl);
+    let photos = tools.formatPhotoString(req.query.photoUrl);
     let url = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext=1&exintro=1&titles="+ name.toLowerCase();
     rp({
       uri: url,
@@ -83,7 +85,7 @@ app.get("/info",function(req,res){
       for(let key in page){
           paragraph = page[key]["extract"];
       };
-      if(!paragraph || !validWikipedia(paragraph)){
+      if(!paragraph || !tools.validWikipedia(paragraph)){
           paragraph = "Sorry, there is no description at this time.";
       }
       res.render("info",{name:name, sciname:sciname, paragraph:paragraph, photos:photos});
@@ -101,86 +103,3 @@ app.get("/about",function(req,res){
 app.listen(process.env.PORT || 3000,function(){
     console.log("Server has started")
 });
-
-//takes in data, reconfigures it, and adds it to the creature object
-//input is JSON data and the desired name of the array to be added to the creature object
-function addCreatures(data, creatureName){
-    let dataArray = [];
-    let creaturesAdded=[];
-    data.forEach(function(creature){
-        //check if valid
-        let id= creature["taxon_id"];
-        if(checkDuplicate(id) === false && checkValid(creature)){
-            let newCreature = {
-              name: creature["taxon"]["common_name"]["name"],
-              'scientific-name': creature["taxon"]["name"],
-              'photo-url': []
-            };
-            creature["photos"].forEach(function(picEntry){
-                newCreature["photo-url"].push(picEntry["medium_url"]);
-            })
-            dataArray.push(newCreature);
-        }
-    });
-
-function checkDuplicate(creatureId){
-        if(creaturesAdded.indexOf(creatureId)!=-1) return true;
-        else creaturesAdded.push(creatureId);
-        return false;
-    }
-
-//checks if an iNaturalist entry has all the properties required to appear on site
-function checkValid(creature){
-        if(creature["taxon"]["common_name"] == null || creature["taxon"]["name"]== null ||
-              creature["photos"][0]["medium_url"]==null) return false;
-            //doesn't include terms "Human" and "Domestic"
-        let creatureName = creature["taxon"]["common_name"]["name"];
-        let avoidTerms = ["human","domestic","mammals","insects","plants"];
-        let valid = true;
-        avoidTerms.forEach(function(term){
-            if(checkString(term,creatureName)===true){
-                valid= false;
-            }
-        });
-        return valid;
-    };
-    let newKey = {}
-    newKey[creatureName] = dataArray
-    return newKey
-};
-
-//determines if a substring exists within a larger string
-function checkString(ss, ms){
-    if(ss.length > ms || ss.length===0) return false;
-    let subString= ss.toLowerCase();
-    let mainString= ms.toLowerCase();
-    let firstLetter = subString[0];
-    for(let i = 0; i< mainString.length; i++){
-        if(firstLetter==mainString[i]){
-            if(subString=== mainString.slice(i,i+subString.length)) return true;
-        }
-    }
-    return false;
-}
-
-//checks if string is valid wikipedia paragraph
-function validWikipedia(wikiPara){
-    var invalidTerms = ["redirect","{{"];
-    var checkedPara = wikiPara.toLowerCase();
-    var valid = true;
-    invalidTerms.forEach(function(term){
-        if(checkString(term,checkedPara)){
-            valid = false;
-        }
-    });
-    return valid;
-}
-
-//Turns a string of photo urls into an array of photo urls
-function parsePhotoString(photoStr){
-    if(photoStr === undefined) return "";
-    let index = photoStr.indexOf(",");
-    if (index === -1) return [photoStr];
-    let currentUrl = [photoStr.slice(0,index)];
-    return currentUrl.concat(parsePhotoString(photoStr.slice(index+1)));
-}
